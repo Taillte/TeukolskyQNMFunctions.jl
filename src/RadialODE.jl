@@ -150,12 +150,14 @@ function eig_vals_vecs(
     s::Integer,
     m::Integer,
     a::T,
+    MGrid::Real,
+    aGrid::Real,
     om::Complex{T},
 ) where {T<:Real}
 
     bhm = T(1) ## always have unit black hole mass
     rmin = T(0) ## location of future null infinity (1/r = ∞)
-    rmax = abs(a) > 0 ? (bhm / (a^2)) * (1 - sqrt(1 - ((a / bhm)^2))) : 0.5 / bhm
+    rmax = abs(aGrid) > 0 ? (MGrid / (aGrid^2)) * (1 - sqrt(1 - ((aGrid / MGrid)^2))) : 0.5 / MGrid
 
     Mat = radial_discretized_eqn_a(nr, s, m, a, bhm, om, rmin, rmax)
     t = eigen(Matrix(Mat), permute = true, scale = true, sortby = abs)

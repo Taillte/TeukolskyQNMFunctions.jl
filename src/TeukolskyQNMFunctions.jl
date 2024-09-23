@@ -91,6 +91,8 @@ function compute_om(
     l::Integer,
     m::Integer,
     a::T,
+    MGrid::Real,
+    aGrid::Real,
     om::Complex{T};
     tolerance::T = 1e6,
     epsilon::T = 1e-6,
@@ -132,7 +134,7 @@ function compute_om(
     neig = l - lmin + 1 # number of eigenvalues
 
     la_s, v_s = SH.eig_vals_vecs(nl, neig, s, m, a * om_np1)
-    la_r, v_r, rvals = RD.eig_vals_vecs(nr, s, m, a, om_np1)
+    la_r, v_r, rvals = RD.eig_vals_vecs(nr, s, m, a, MGrid, aGrid, om_np1)
 
     return om_np1, la_r, v_s[:, l-lmin+1], v_r, rvals
 end
